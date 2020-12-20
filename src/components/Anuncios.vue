@@ -8,7 +8,7 @@
       ></v-text-field>
     </v-row>
     <v-row>
-      <v-col cols="2">
+      <v-col cols="2" class="d-none d-md-flex">
         <div class="filtros">
           <div class="filtros__marcas">
             <h3>Marcas</h3>
@@ -57,8 +57,8 @@
           </div>
         </div>
       </v-col>
-      <v-col cols="10">
-        <div>
+      <v-col class="col-sm-12 col-md-10">
+        <div class="d-none d-md-flex">
           <v-row>
             <v-col cols="6" class="utils" style="padding: 1em">
               <v-row>
@@ -92,31 +92,26 @@
             </v-col>
           </v-row>
         </div>
-        <v-row>
+        <v-row v-if="loading">
           <v-progress-circular
+            :width="9"
             :value="100"
             :size="200"
+            style="margin-top: 1em"
             indeterminate
             v-show="loading"
             class="col-10"
             color="deep-orange lighten-2"
           ></v-progress-circular>
+        </v-row>
+        <v-row v-else>
           <v-card
             v-for="(anuncio, index) in anuncios"
             :key="index"
             v-show="filtrar(index)"
-            :loading="loading"
             class="mx-auto col-3 card-p"
             max-width="320"
           >
-            <template slot="progress">
-              <v-progress-linear
-                color="deep-purple"
-                height="10"
-                indeterminate
-              ></v-progress-linear>
-            </template>
-
             <v-img
               height="250"
               src="https://www.gizmochina.com/wp-content/uploads/2019/03/Huawei-P30-600x600.jpg"
@@ -164,11 +159,9 @@ export default {
     hasta: "0",
     asc: false,
   }),
-  firestore: {
-    anuncios: db.collection("anuncios"),
-  },
   methods: {
     getAll() {
+      this.loading = true;
       db.collection("anuncios")
         .get()
         .then((querySnapshot) => {
@@ -176,9 +169,11 @@ export default {
           querySnapshot.docs.map((doc) => {
             this.anuncios.push({ id: doc.id, ...doc.data() });
           });
+          this.loading = false;
         });
     },
     filtrosCheck(valor) {
+      this.loading = true;
       this.check = !this.check;
       if (this.check) {
         db.collection("anuncios")
@@ -195,6 +190,7 @@ export default {
                 this.anuncios.push({ id: doc.id, ...doc.data() });
               }
             });
+            this.loading = false;
           });
       } else {
         this.getAll();
@@ -213,6 +209,7 @@ export default {
       return array.indexOf(this.search.toUpperCase()) >= 0;
     },
     filtroPrecio(desde, hasta) {
+      this.loading = true;
       desde = Number(desde);
       hasta = Number(hasta);
       if (hasta <= desde) {
@@ -227,10 +224,12 @@ export default {
             querySnapshot.docs.map((doc) => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
+            this.loading = false;
           });
       }
     },
     orderByPrecio() {
+      this.loading = true;
       if (this.asc) {
         this.asc = false;
         db.collection("anuncios")
@@ -241,6 +240,7 @@ export default {
             querySnapshot.docs.map((doc) => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
+            this.loading = false;
           });
       } else {
         this.asc = true;
@@ -252,10 +252,12 @@ export default {
             querySnapshot.docs.map((doc) => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
+            this.loading = false;
           });
       }
     },
     countSistemas() {
+      this.loading = true;
       db.collection("anuncios")
         .get()
         .then((querySnapshot) => {
@@ -284,8 +286,10 @@ export default {
             }
           }
         });
+      this.loading = false;
     },
     countMarcas() {
+      this.loading = true;
       db.collection("anuncios")
         .get()
         .then((querySnapshot) => {
@@ -314,8 +318,10 @@ export default {
             }
           }
         });
+      this.loading = false;
     },
     countPantallas() {
+      this.loading = true;
       db.collection("anuncios")
         .get()
         .then((querySnapshot) => {
@@ -344,9 +350,11 @@ export default {
             }
           }
         });
+      this.loading = false;
     },
   },
   created() {
+    this.getAll();
     this.countMarcas();
     this.countSistemas();
     this.countPantallas();

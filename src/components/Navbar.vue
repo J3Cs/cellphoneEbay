@@ -2,30 +2,33 @@
   <div>
     <v-app-bar app>
       <div class="d-flex align-center">
-        <!--<v-img
+        <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
           src="../assets/log.png"
           transition="scale-transition"
           width="40"
-        />-->
+        />
       </div>
       <v-toolbar-title style="color: #fff; font-weight: 700; margin-left: 3px">
         Cellphone Ebay</v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <router-link to="/">
-        <v-btn class="inicio"> Inicio </v-btn>
-      </router-link>
-      <router-link to="/">
-        <v-btn class="estadisticas"> estadisticas </v-btn>
-      </router-link>
+      <div class="d-none d-md-flex">
+        <router-link to="/">
+          <v-btn class="inicio"> Inicio </v-btn>
+        </router-link>
+        <router-link to="/">
+          <v-btn class="estadisticas"> estadisticas </v-btn>
+        </router-link>
+      </div>
       <v-spacer></v-spacer>
-
-      <router-link to="/nuevo">
-        <v-btn> Nuevo Anuncio </v-btn>
-      </router-link>
+      <div class="d-none d-md-flex">
+        <router-link to="/nuevo">
+          <v-btn> Nuevo Anuncio </v-btn>
+        </router-link>
+      </div>
     </v-app-bar>
   </div>
 </template>
