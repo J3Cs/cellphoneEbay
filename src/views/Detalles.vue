@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-row style="margin-top: 4em; margin-left: 0.5em">
-      <v-col cols="6">
+    <v-row class="ml-1">
+      <v-col class="col-md-6 col-12">
         <v-carousel height="400" v-show="items.length > 0">
           <v-carousel-item
             v-for="(item, i) in items"
@@ -11,9 +11,9 @@
         </v-carousel>
       </v-col>
 
-      <v-col cols="6" offset="1">
+      <v-col class="col-12 offset-md-1 col-md-5">
         <div class="informacion">
-          <h2 class="informacion__titulo">{{ anuncio.titulo }}</h2>
+          <h2 class="informacion__titulo" style="text-align: center">{{ anuncio.titulo }}</h2>
           <h3 class="informacion__precio">${{ anuncio.precio }}</h3>
           <v-btn> Comprar </v-btn>
           <div class="informacion__contacto">
@@ -32,24 +32,27 @@
 
     <v-row>
       <v-col cols="12">
-        <h1 style="text-decoration: underline">Descripcion</h1>
-        <v-col cols="12" class="especs">
-          <div class="col-5 descripcion__especificaciones">
-            <ul>
-              <li>Estado: {{ anuncio.descripcion.estado }}</li>
-              <li>Marca: {{ anuncio.descripcion.marca }}</li>
-              <li>Modelo: {{ anuncio.descripcion.modelo }}</li>
-              <li>Pantalla: {{ anuncio.descripcion.pantalla }}</li>
-              <li>Sistema: {{ anuncio.descripcion.sistema }}</li>
-              <li>RAM: {{ anuncio.descripcion.ram }}</li>
-              <li>ROM: {{ anuncio.descripcion.rom }}</li>
-            </ul>
-          </div>
-
-          <div class="col-5 descripcion__especificaciones">
-            <p>{{ anuncio.descripcion.descripcion }}</p>
-          </div>
-        </v-col>
+        <h1 style="text-decoration: underline; text-align: center;" class="col-12">Descripcion</h1>
+        <v-row>
+          <v-col class="col-12 col-md-6">
+            <div class="descripcion__especificaciones">
+              <ul>
+                <li>Estado: {{ anuncio.descripcion.estado }}</li>
+                <li>Marca: {{ anuncio.descripcion.marca }}</li>
+                <li>Modelo: {{ anuncio.descripcion.modelo }}</li>
+                <li>Pantalla: {{ anuncio.descripcion.pantalla }}</li>
+                <li>Sistema: {{ anuncio.descripcion.sistema }}</li>
+                <li>RAM: {{ anuncio.descripcion.ram }}</li>
+                <li>ROM: {{ anuncio.descripcion.rom }}</li>
+              </ul>
+            </div>
+          </v-col>
+          <v-col class="col-12 col-md-6">
+            <div class="descripcion__especificaciones">
+              <p>{{ anuncio.descripcion.descripcion }}</p>
+            </div>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </div>
@@ -131,17 +134,22 @@ export default {
 .informacion__contacto__vendedor {
   margin-right: 2em;
 }
-.especs {
-  display: flex;
-  align-content: space-between;
-}
 .descripcion__especificaciones {
   padding: 1em;
   text-align: left;
-  border: 1px solid #000;
+  border: 1px solid #FFF;
+  box-shadow: -6px 10px 5px #AFB42B;
   border-radius: 15px;
   margin-right: 3em;
   margin-left: 4em;
+  background: linear-gradient(270deg, #AFB42B, #33691E);
+  color: #fff;
+  height: 100%;
+  transition: 0.3s;
+}
+.descripcion__especificaciones:hover {
+  box-shadow: 6px -10px 5px #AFB42B;
+  background: linear-gradient(270deg, #33691E, #AFB42B);
 }
 .descripcion__especificaciones ul {
   list-style: none;
@@ -149,7 +157,6 @@ export default {
 .descripcion__especificaciones li {
   margin: 0.5rem;
   font-size: 1.5em;
-  margin-left: 3em;
 }
 .descripcion__especificaciones p {
   margin: 0.5rem;
@@ -161,6 +168,11 @@ export default {
   background: transparent;
   border: 1px solid rgb(7, 201, 39);
   color: rgb(7, 201, 39);
+  box-shadow: none;
+}
+.theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined):hover {
+  background: rgb(7, 201, 39);
+  color: #fff;
   box-shadow: none;
 }
 </style>
