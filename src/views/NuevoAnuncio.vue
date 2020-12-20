@@ -1,6 +1,6 @@
 <template>
-  <v-row style="margin-top: 6em; margin-left: 2em">
-    <v-col cols="5">
+  <v-row style="margin-top: 1em; margin-left: 1em">
+    <v-col class="col-11 col-md-5 border mb-2">
       <v-form ref="form1" v-model="valid" lazy-validation>
         <v-row>
           <v-text-field
@@ -8,7 +8,7 @@
             :counter="10"
             :rules="txtRules"
             label="Marca"
-            class="col-12"
+            class="margin__r"
             required
           ></v-text-field>
 
@@ -16,10 +16,9 @@
             v-model="nuevo.descripcion.modelo"
             label="Modelo"
             :rules="txtRules"
-            class="col-12"
             required
           ></v-text-field>
-          <v-row>
+          <v-row class="ml-1">
             <v-text-field
               v-model="nuevo.descripcion.pantalla"
               label="Pantalla (en pulgadas)"
@@ -75,7 +74,7 @@
       </v-form>
     </v-col>
 
-    <v-col cols="5" style="margin-left: 5em">
+    <v-col class="col-11 col-md-5 offset-md-1 border">
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
           v-model="nuevo.nombre"
@@ -114,8 +113,20 @@
           prepend-icon="mdi-camera"
         ></v-file-input>
       </div>
-      <v-btn @click="procesar" :loading="loading" :disabled="archivo == null">
+      <v-btn
+        color="light-green accent-4"
+        @click="procesar"
+        :loading="loading"
+        :disabled="archivo == null"
+      >
         Crear
+      </v-btn>
+      <v-btn
+        color="orange darken-4"
+        @click="cancel"
+        :disabled="archivo != null"
+      >
+        Cancelar
       </v-btn>
     </v-col>
   </v-row>
@@ -155,6 +166,10 @@ export default {
   },
 
   methods: {
+    cancel() {
+      this.archivo = null;
+      this.$router.push("/");
+    },
     procesar() {
       if (this.$refs.form1.validate() && this.$refs.form.validate()) {
         db.collection("anuncios")
@@ -201,7 +216,19 @@ export default {
 </script>
 
 <style scoped>
-.margin__r{
+.margin__r {
   margin-right: 1em;
+}
+.border {
+  border: 1px solid #fff;
+  border-radius: 15px;
+  padding: 1.5em;
+  background: linear-gradient(90deg, #70aee4, transparent 50%);
+  box-shadow: 6px -8px 5px #1E88E5;
+  transition: 0.2s;
+}
+.border:hover{
+  box-shadow: -6px 8px 5px #1E88E5;
+  background: linear-gradient(90deg, transparent , #70aee4);
 }
 </style>

@@ -7,9 +7,9 @@
         v-model="search"
       ></v-text-field>
     </v-row>
-    <v-row>
+    <v-row class="d-flex d-md-none">
       <v-col class="d-flex">
-        <v-expansion-panels class="col-6">
+        <v-expansion-panels class="col-8">
           <v-expansion-panel>
             <v-expansion-panel-header> Ordenar por: </v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -19,7 +19,7 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </v-col>
-      <v-col col-6>
+      <v-col class="col-3">
         <v-dialog v-model="dialog" width="500">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="indigo darken-4" v-bind="attrs" v-on="on" dark>
