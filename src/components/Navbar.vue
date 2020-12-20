@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app>
+    <v-app-bar app class="d-none d-md-block" color="deep-purple accent-4">
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -11,9 +11,7 @@
           width="40"
         />
       </div>
-      <v-toolbar-title style="color: #fff; font-weight: 700; margin-left: 3px">
-        Cellphone Ebay</v-toolbar-title
-      >
+      <v-toolbar-title class="title"> Cellphone Ebay</v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="d-none d-md-flex">
         <router-link to="/">
@@ -30,20 +28,83 @@
         </router-link>
       </div>
     </v-app-bar>
+
+    <v-app-bar color="deep-purple accent-4" dark class="d-md-none d-block">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title class="title">Cellphone Ebay</v-toolbar-title>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer"
+     absolute left temporary color="indigo darken-4">
+      <v-list nav dense>
+        <div class="information">
+          <v-list-item-avatar>
+            <v-img src="../assets/log.png"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-title class="title">Cellphone Ebay</v-list-item-title>
+        </div>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <router-link class="link" to="/">Inicio </router-link>
+          </v-list-item>
+          <v-list-item>
+            <router-link class="link" to="/nuevo">Nuevo Anuncio </router-link>
+          </v-list-item>
+          <v-list-item>
+            <router-link class="link" to="/">Estadisticas </router-link>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 <script>
 export default {
   name: "Navbar",
+  data: () => ({
+    drawer: false,
+    group: null,
+  }),
+
+  watch: {
+    group() {
+      this.drawer = false;
+    },
+  },
 };
 </script>
 <style scoped>
 a {
   text-decoration: none;
 }
-.v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
-  background: #a52a2a;
+.information{
+  display: flex;
+  color: #fff;
+  margin-left: 1.2em;
 }
+.link {
+  margin-top: 1em;
+  background: #fff;
+  color: #1A237E;
+  font-weight: 500;
+  border: 1px solid #fff;
+  text-align: center;
+  border-radius: 15px;
+  width: 100%;
+  padding: 0.4em;
+  box-shadow: 0 5px 5px rgba(255, 255, 255, 0.5);
+}
+.title {
+  color: #fff;
+  font-weight: 700;
+  margin-left: 3px;
+  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+}
+
 .theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
   background: #ff0067;
   color: #fff;

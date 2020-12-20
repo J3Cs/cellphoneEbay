@@ -1,11 +1,84 @@
 <template>
   <div class="containerd">
-    <v-row>
+    <v-row style="margin-top: -4em">
       <v-text-field
         label="Buscar"
         prepend-inner-icon="mdi-magnify"
         v-model="search"
       ></v-text-field>
+    </v-row>
+    <v-row>
+      <v-col class="d-flex">
+        <v-expansion-panels class="col-6">
+          <v-expansion-panel>
+            <v-expansion-panel-header> Ordenar por: </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-btn class="btns col-12" @click="orderByPrecio()">Precio</v-btn>
+              <v-btn class="btns col-12">Fecha</v-btn>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-col>
+      <v-col col-6>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="indigo darken-4" v-bind="attrs" v-on="on" dark>
+              <v-icon> mdi-filter </v-icon>
+            </v-btn>
+          </template>
+
+          <div class="filtros" style="background:rgba(255,255,255,0.9)">
+            <div class="filtros__marcas">
+              <h3>Marcas</h3>
+              <ul>
+                <li v-for="(marca, index) in contMarca" :key="index">
+                  <input type="checkbox" @click="filtrosCheck(marca.marca);dialog=false" >
+                  <label for="check">
+                    {{ marca.marca }}
+                    <v-chip style="background: brown; color: #fff">{{
+                      marca.cant
+                    }}</v-chip>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div class="filtros__marcas">
+              <h3>Sistema</h3>
+              <ul>
+                <li v-for="(sistema, index) in contSistema" :key="index">
+                  <input
+                    type="checkbox"
+                    @click="filtrosCheck(sistema.sistema); dialog=false"
+                  />
+                  <label for="check">
+                    {{ sistema.sistema }}
+                    <v-chip style="background: brown; color: #fff">{{
+                      sistema.cant
+                    }}</v-chip>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div class="filtros__marcas">
+              <h3>Pantalla</h3>
+              <ul>
+                <li v-for="(pantalla, index) in contPantalla" :key="index">
+                  <input
+                    type="checkbox"
+                    @click="filtrosCheck(pantalla.pantalla); dialog=false"
+                  />
+                  <label for="check">
+                    {{ pantalla.pantalla }}
+                    <v-chip style="background: brown; color: #fff">{{
+                      pantalla.cant
+                    }}</v-chip>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </v-dialog>
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="2" class="d-none d-md-flex">
@@ -60,9 +133,9 @@
       <v-col class="col-sm-12 col-md-10">
         <div class="d-none d-md-flex">
           <v-row>
-            <v-col cols="6" class="utils" style="padding: 1em">
+            <v-col cols="8" class="utils" style="padding: 1em">
               <v-row>
-                <h3>Precio</h3>
+                <h3 class="col-12">Precio</h3>
                 <v-text-field
                   label="Desde"
                   v-model="desde"
@@ -75,19 +148,19 @@
               </v-row>
             </v-col>
             <v-col
-              cols="5"
-              style="margin-left: 1em; padding-left: 2em"
+              cols="2"
+              style="margin-left: 1em; padding: 1em"
               class="utils"
             >
               <v-row>
-                <h3>Ordenar</h3>
+                <h3 class="col-12">Ordenar</h3>
                 <v-btn
-                  class="btns"
+                  class="btns col-12"
                   @click="orderByPrecio()"
-                  style="margin-right: 1em; margin-left: 1em"
+                  style="margin-right: 1em"
                   >Precio</v-btn
                 >
-                <v-btn class="btns">Fecha</v-btn>
+                <v-btn class="btns col-12">Fecha</v-btn>
               </v-row>
             </v-col>
           </v-row>
@@ -158,6 +231,7 @@ export default {
     desde: "0",
     hasta: "0",
     asc: false,
+    dialog: false,
   }),
   methods: {
     getAll() {
@@ -390,9 +464,8 @@ export default {
   border-radius: 15px;
 }
 .utils {
-  background: linear-gradient(315deg, #c5a6ee, #5b06c9);
   border-radius: 15px;
-  color: #fff;
+  border: 1px solid;
 }
 .filtros__marcas {
   margin-bottom: 1em;
