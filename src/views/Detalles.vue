@@ -13,7 +13,9 @@
 
       <v-col class="col-12 offset-md-1 col-md-5">
         <div class="informacion">
-          <h2 class="informacion__titulo" style="text-align: center">{{ anuncio.titulo }}</h2>
+          <h2 class="informacion__titulo" style="text-align: center">
+            {{ anuncio.titulo }}
+          </h2>
           <h3 class="informacion__precio">${{ anuncio.precio }}</h3>
           <v-btn> Comprar </v-btn>
           <div class="informacion__contacto">
@@ -32,7 +34,12 @@
 
     <v-row>
       <v-col cols="12">
-        <h1 style="text-decoration: underline; text-align: center;" class="col-12">Descripcion</h1>
+        <h1
+          style="text-decoration: underline; text-align: center;"
+          class="col-12"
+        >
+          Descripcion
+        </h1>
         <v-row>
           <v-col class="col-12 col-md-6">
             <div class="descripcion__especificaciones">
@@ -64,10 +71,10 @@ export default {
   data() {
     return {
       anuncio: {
-        descripcion: {},
+        descripcion: {}
       },
       id: this.$route.params.id,
-      items: [],
+      items: []
     };
   },
   methods: {
@@ -79,25 +86,25 @@ export default {
       ref
         .child(`${carpeta}/`)
         .listAll()
-        .then((result) => {
-          result.items.forEach((imgRef) => {
-            imgRef.getDownloadURL().then((url) => {
+        .then(result => {
+          result.items.forEach(imgRef => {
+            imgRef.getDownloadURL().then(url => {
               this2.items.push(url);
             });
           });
         });
-    },
+    }
   },
   async created() {
     this.anuncio = await db
       .collection("anuncios")
       .doc(this.id)
       .get()
-      .then((snapshot) => {
+      .then(snapshot => {
         return snapshot.data();
       });
     this.getImages();
-  },
+  }
 };
 </script>
 <style scoped>
@@ -137,19 +144,19 @@ export default {
 .descripcion__especificaciones {
   padding: 1em;
   text-align: left;
-  border: 1px solid #FFF;
-  box-shadow: -6px 10px 5px #1A237E;
+  border: 1px solid #fff;
+  box-shadow: -6px 10px 5px #1a237e;
   border-radius: 15px;
   margin-right: 3em;
   margin-left: 4em;
-  background: linear-gradient(270deg, #1A237E, #5C6BC0);
+  background: linear-gradient(270deg, #1a237e, #5c6bc0);
   color: #fff;
   height: 100%;
   transition: 0.3s;
 }
 .descripcion__especificaciones:hover {
-  box-shadow: 6px -10px 5px #1A237E;
-  background: linear-gradient(270deg, #5C6BC0, #1A237E);
+  box-shadow: 6px -10px 5px #1a237e;
+  background: linear-gradient(270deg, #5c6bc0, #1a237e);
 }
 .descripcion__especificaciones ul {
   list-style: none;
