@@ -138,18 +138,18 @@ export default {
   padding: 1em;
   text-align: left;
   border: 1px solid #FFF;
-  box-shadow: -6px 10px 5px #AFB42B;
+  box-shadow: -6px 10px 5px #1A237E;
   border-radius: 15px;
   margin-right: 3em;
   margin-left: 4em;
-  background: linear-gradient(270deg, #AFB42B, #33691E);
+  background: linear-gradient(270deg, #1A237E, #5C6BC0);
   color: #fff;
   height: 100%;
   transition: 0.3s;
 }
 .descripcion__especificaciones:hover {
-  box-shadow: 6px -10px 5px #AFB42B;
-  background: linear-gradient(270deg, #33691E, #AFB42B);
+  box-shadow: 6px -10px 5px #1A237E;
+  background: linear-gradient(270deg, #5C6BC0, #1A237E);
 }
 .descripcion__especificaciones ul {
   list-style: none;
