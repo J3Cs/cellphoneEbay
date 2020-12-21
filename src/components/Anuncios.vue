@@ -27,12 +27,18 @@
             </v-btn>
           </template>
 
-          <div class="filtros" style="background:rgba(255,255,255,0.9)">
+          <div class="filtros" style="background: rgba(255, 255, 255, 0.9)">
             <div class="filtros__marcas">
               <h3>Marcas</h3>
               <ul>
                 <li v-for="(marca, index) in contMarca" :key="index">
-                  <input type="checkbox" @click="filtrosCheck(marca.marca);dialog=false" >
+                  <input
+                    type="checkbox"
+                    @click="
+                      filtrosCheck(marca.marca);
+                      dialog = false;
+                    "
+                  />
                   <label for="check">
                     {{ marca.marca }}
                     <v-chip style="background: brown; color: #fff">{{
@@ -48,7 +54,10 @@
                 <li v-for="(sistema, index) in contSistema" :key="index">
                   <input
                     type="checkbox"
-                    @click="filtrosCheck(sistema.sistema); dialog=false"
+                    @click="
+                      filtrosCheck(sistema.sistema);
+                      dialog = false;
+                    "
                   />
                   <label for="check">
                     {{ sistema.sistema }}
@@ -65,7 +74,10 @@
                 <li v-for="(pantalla, index) in contPantalla" :key="index">
                   <input
                     type="checkbox"
-                    @click="filtrosCheck(pantalla.pantalla); dialog=false"
+                    @click="
+                      filtrosCheck(pantalla.pantalla);
+                      dialog = false;
+                    "
                   />
                   <label for="check">
                     {{ pantalla.pantalla }}
@@ -185,12 +197,12 @@
             class="mx-auto col-3 card-p"
             max-width="320"
           >
-            <v-img
-              height="250"
-              src="https://www.gizmochina.com/wp-content/uploads/2019/03/Huawei-P30-600x600.jpg"
-            ></v-img>
-
-            <v-card-title>{{ anuncio.titulo }}</v-card-title>
+            <div v-for="(image,index) in images" :key="index">
+              <div v-if="anuncio.id == image.id">
+                <v-img height="250" :src="image.url"></v-img>
+              </div>
+            </div>
+            <v-card-title>{{ anuncio.titulo }}{{ images.url }}</v-card-title>
             <v-card-subtitle>$ {{ anuncio.precio }}</v-card-subtitle>
 
             <v-card-text>
@@ -213,7 +225,7 @@
 </template>
 
 <script>
-import { db } from "../db";
+import { db, storage } from "../db";
 export default {
   name: "Anuncios",
 
@@ -232,6 +244,8 @@ export default {
     hasta: "0",
     asc: false,
     dialog: false,
+    images: [],
+    urlImg: [],
   }),
   methods: {
     getAll() {
@@ -241,9 +255,29 @@ export default {
         .then((querySnapshot) => {
           this.anuncios = [];
           querySnapshot.docs.map((doc) => {
-            this.anuncios.push({ id: doc.id, ...doc.data() });
+            this.anuncios.push({
+              id: doc.id,
+              image: this.getImages(doc.id),
+              ...doc.data(),
+            });
           });
+          console.log(this.images);
           this.loading = false;
+        });
+    },
+    async getImages(id) {
+      this.images = []
+      const ref = storage.ref();
+      const carpeta = id;
+      await ref
+        .child(`${carpeta}/`)
+        .list({ maxResults: 1 })
+        .then((res) => {
+          res.items.forEach((imgRef) => {
+            imgRef.getDownloadURL().then((url) => {
+              this.images.push({ id, url });
+            });
+          });
         });
     },
     filtrosCheck(valor) {
