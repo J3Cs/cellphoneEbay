@@ -19,7 +19,7 @@
             <v-icon>mdi-home-circle</v-icon> Inicio
           </v-btn>
         </router-link>
-        <router-link to="/">
+        <router-link to="/stats">
           <v-btn class="estadisticas">
             <v-icon>mdi-chart-bar</v-icon> estadisticas
           </v-btn>
@@ -71,7 +71,7 @@
             </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link class="link" to="/">
+            <router-link class="link" to="/stats">
               <v-icon>mdi-chart-bar</v-icon> Estadisticas
             </router-link>
           </v-list-item>

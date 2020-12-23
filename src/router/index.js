@@ -20,6 +20,11 @@ const routes = [
     component: () => import('../views/NuevoAnuncio.vue')
   },
   {
+    path: '/stats',
+    name: 'Estadisticas',
+    component: () => import('../views/Estadisticas.vue')
+  },
+  {
     path: '*',
     name: '404',
     component: () => import('../views/404.vue')
