@@ -15,16 +15,16 @@
       <v-spacer></v-spacer>
       <div class="d-none d-md-flex">
         <router-link to="/">
-          <v-btn class="inicio"> Inicio </v-btn>
+          <v-btn class="inicio"> <v-icon>mdi-home-circle</v-icon> Inicio </v-btn>
         </router-link>
         <router-link to="/">
-          <v-btn class="estadisticas"> estadisticas </v-btn>
+          <v-btn class="estadisticas"><v-icon>mdi-chart-bar</v-icon> estadisticas </v-btn>
         </router-link>
       </div>
       <v-spacer></v-spacer>
       <div class="d-none d-md-flex">
         <router-link to="/nuevo">
-          <v-btn> Nuevo Anuncio </v-btn>
+          <v-btn> Nuevo Anuncio <v-icon>mdi-clipboard-plus</v-icon></v-btn>
         </router-link>
       </div>
     </v-app-bar>
@@ -49,13 +49,13 @@
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item>
-            <router-link class="link" to="/">Inicio </router-link>
+            <router-link class="link" to="/"><v-icon>mdi-home-circle</v-icon> Inicio </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link class="link" to="/nuevo">Nuevo Anuncio </router-link>
+            <router-link class="link" to="/nuevo"><v-icon>mdi-clipboard-plus</v-icon> Nuevo Anuncio </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link class="link" to="/">Estadisticas </router-link>
+            <router-link class="link" to="/"><v-icon>mdi-chart-bar</v-icon> Estadisticas </router-link>
           </v-list-item>
         </v-list-item-group>
       </v-list>

@@ -145,7 +145,7 @@
       <v-col class="col-sm-12 col-md-10">
         <div class="d-none d-md-flex">
           <v-row>
-            <v-col cols="8" class="utils" style="padding: 1em">
+            <v-col cols="8" class="utils">
               <v-row>
                 <h3 class="col-12">Precio</h3>
                 <v-text-field
@@ -161,7 +161,7 @@
             </v-col>
             <v-col
               cols="2"
-              style="margin-left: 1em; padding: 1em"
+              style="margin-left: 1em;"
               class="utils"
             >
               <v-row>
@@ -498,8 +498,13 @@ export default {
   border-radius: 15px;
 }
 .utils {
+  padding: 2em;
   border-radius: 15px;
-  border: 1px solid;
+  box-shadow: 15px 15px 20px rgba(0,0,0,0.1),
+              -15px -15px 20px #fff,
+              inset -5px -5px 5px rgba(255,255,255,0.5),
+              inset 5px 5px 5px rgba(0,0,0,0.05);
+  margin-bottom: 1em;
 }
 .filtros__marcas {
   margin-bottom: 1em;
@@ -516,6 +521,7 @@ export default {
   list-style: none;
   text-align: left;
   position: relative;
+  padding-left: 0 !important;
 }
 .filtros__marcas li {
   position: relative;

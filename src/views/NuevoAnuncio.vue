@@ -118,15 +118,16 @@
         @click="procesar"
         :loading="loading"
         :disabled="archivo == null"
+        class="mr-3"
       >
-        Crear
+      <v-icon>mdi-book-plus</v-icon>Crear
       </v-btn>
       <v-btn
         color="orange darken-4"
         @click="cancel"
         :disabled="archivo != null"
       >
-        Cancelar
+        <v-icon>mdi-book-cancel</v-icon>Cancelar
       </v-btn>
     </v-col>
   </v-row>
@@ -223,12 +224,13 @@ export default {
   border: 1px solid #fff;
   border-radius: 15px;
   padding: 1.5em;
-  background: linear-gradient(90deg, #70aee4, transparent 50%);
-  box-shadow: 6px -8px 5px #1E88E5;
+  box-shadow: 15px 15px 20px rgba(0,0,0,0.1),
+              -15px -15px 20px #fff,
+              inset -5px -5px 5px rgba(255,255,255,0.5),
+              inset 5px 5px 5px rgba(0,0,0,0.05);
   transition: 0.2s;
 }
 .border:hover{
-  box-shadow: -6px 8px 5px #1E88E5;
-  background: linear-gradient(90deg, transparent , #70aee4);
+  transform: scale(1.01);
 }
 </style>

@@ -17,13 +17,13 @@
             {{ anuncio.titulo }}
           </h2>
           <h3 class="informacion__precio">${{ anuncio.precio }}</h3>
-          <v-btn> Comprar </v-btn>
+          <v-btn> Comprar <v-icon color="green">mdi-handshake</v-icon></v-btn>
           <div class="informacion__contacto">
-            <span class="informacion__contacto__label">vendedor: </span
+            <span class="informacion__contacto__label"><v-icon>mdi-account</v-icon>vendedor: </span
             ><span class="informacion__contacto__vendedor">{{
               anuncio.nombre
             }}</span>
-            <span class="informacion__contacto__label">Telefono: </span
+            <span class="informacion__contacto__label"><v-icon>mdi-phone</v-icon>Telefono: </span
             ><span class="informacion__contacto__telefono">{{
               anuncio.telefono
             }}</span>
@@ -44,19 +44,19 @@
           <v-col class="col-12 col-md-6">
             <div class="descripcion__especificaciones">
               <ul>
-                <li>Estado: {{ anuncio.descripcion.estado }}</li>
-                <li>Marca: {{ anuncio.descripcion.marca }}</li>
-                <li>Modelo: {{ anuncio.descripcion.modelo }}</li>
-                <li>Pantalla: {{ anuncio.descripcion.pantalla }}</li>
-                <li>Sistema: {{ anuncio.descripcion.sistema }}</li>
-                <li>RAM: {{ anuncio.descripcion.ram }}</li>
-                <li>ROM: {{ anuncio.descripcion.rom }}</li>
+                <li><v-icon color="white">mdi-checkbox-multiple-marked</v-icon>Estado: {{ anuncio.descripcion.estado }}</li>
+                <li><v-icon color="white">mdi-briefcase</v-icon>Marca: {{ anuncio.descripcion.marca }}</li>
+                <li><v-icon color="white">mdi-cellphone</v-icon>Modelo: {{ anuncio.descripcion.modelo }}</li>
+                <li><v-icon color="white">mdi-tablet-cellphone</v-icon>Pantalla: {{ anuncio.descripcion.pantalla }}</li>
+                <li><v-icon color="white">mdi-android</v-icon>Sistema: {{ anuncio.descripcion.sistema }}</li>
+                <li><v-icon color="white">mdi-chip</v-icon>RAM: {{ anuncio.descripcion.ram }}</li>
+                <li><v-icon color="white">mdi-memory</v-icon>ROM: {{ anuncio.descripcion.rom }}</li>
               </ul>
             </div>
           </v-col>
           <v-col class="col-12 col-md-6">
             <div class="descripcion__especificaciones">
-              <p>{{ anuncio.descripcion.descripcion }}</p>
+              <p><v-icon color="white">mdi-text-box</v-icon>{{ anuncio.descripcion.descripcion }}</p>
             </div>
           </v-col>
         </v-row>
@@ -132,6 +132,7 @@ export default {
   border: 2px solid #000;
   border-radius: 15px;
   padding: 1.5em;
+  box-shadow: -3px 5px 5px rgba(0, 0, 0, 0.5);
 }
 .informacion__contacto__label {
   font-weight: 600;
