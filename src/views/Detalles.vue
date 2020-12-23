@@ -3,11 +3,9 @@
     <v-row class="ml-1">
       <v-col class="col-md-6 col-12">
         <v-carousel height="400" v-show="items.length > 0">
-          <v-carousel-item
-            v-for="(item, i) in items"
-            :key="i"
-            
-          ><img :src="item" style="height: 100%; width: 100%"/></v-carousel-item>
+          <v-carousel-item v-for="(item, i) in items" :key="i">
+            <img :src="item" style="height: 100%; width: 100%" />
+          </v-carousel-item>
         </v-carousel>
       </v-col>
 
@@ -19,12 +17,13 @@
           <h3 class="informacion__precio">${{ anuncio.precio }}</h3>
           <v-btn> Comprar <v-icon color="green">mdi-handshake</v-icon></v-btn>
           <div class="informacion__contacto">
-            <span class="informacion__contacto__label"><v-icon>mdi-account</v-icon>vendedor: </span
-            ><span class="informacion__contacto__vendedor">{{
+            <span class="informacion__contacto__label" >
+              <v-icon>mdi-account</v-icon>vendedor:</span
+            ><span class="informacion__contacto__vendedor" >{{
               anuncio.nombre
             }}</span>
-            <span class="informacion__contacto__label"><v-icon>mdi-phone</v-icon>Telefono: </span
-            ><span class="informacion__contacto__telefono">{{
+            <span class="informacion__contacto__label" ><v-icon>mdi-phone</v-icon>Telefono: </span
+            ><span class="informacion__contacto__telefono" >{{
               anuncio.telefono
             }}</span>
           </div>
