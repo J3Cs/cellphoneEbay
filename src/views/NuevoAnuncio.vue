@@ -7,6 +7,7 @@
             v-model="nuevo.descripcion.marca"
             :counter="10"
             :rules="txtRules"
+            append-icon="mdi-briefcase"
             label="Marca"
             class="margin__r"
             required
@@ -16,6 +17,7 @@
             v-model="nuevo.descripcion.modelo"
             label="Modelo"
             :rules="txtRules"
+            append-icon="mdi-cellphone"
             required
           ></v-text-field>
           <v-row class="ml-1">
@@ -23,6 +25,7 @@
               v-model="nuevo.descripcion.pantalla"
               label="Pantalla (en pulgadas)"
               :rules="numRules"
+              append-icon="mdi-tablet-cellphone"
               class="margin__r"
               required
             ></v-text-field>
@@ -31,6 +34,7 @@
               v-model="nuevo.descripcion.ram"
               :rules="numRules"
               class="margin__r"
+              append-icon="mdi-chip"
               label="RAM"
               required
             ></v-text-field>
@@ -40,6 +44,7 @@
               :rules="numRules"
               class="margin__r"
               label="ROM"
+              append-icon="mdi-memory"
               required
             ></v-text-field>
 
@@ -48,6 +53,7 @@
               label="Sistema (Android, iOS, etc)"
               :rules="txtRules"
               class="margin__r"
+              append-icon="mdi-android"
               required
             ></v-text-field>
             <v-text-field
@@ -62,12 +68,14 @@
               v-model="nuevo.descripcion.estado"
               class="margin__r"
               label="Estado del telefono (nuevo o usado)"
+              append-icon="mdi-checkbox-multiple-marked"
               :rules="txtRules"
             ></v-text-field>
           </v-row>
           <v-textarea
             v-model="nuevo.descripcion.descripcion"
             label="Descripcion"
+            append-icon="mdi-text-box"
             :rules="desRules"
           ></v-textarea>
         </v-row>
@@ -81,6 +89,7 @@
           :counter="10"
           :rules="txtRules"
           label="Vendedor"
+          append-icon="mdi-account"
           required
         ></v-text-field>
 
@@ -88,6 +97,7 @@
           v-model="nuevo.titulo"
           label="Titulo del anuncio"
           :rules="txtRules"
+          append-icon="mdi-text-box-multiple"
           required
         ></v-text-field>
 
@@ -95,6 +105,7 @@
           v-model="nuevo.telefono"
           label="Numero de telefono"
           :rules="telRules"
+          append-icon="mdi-cellphone"
           required
         ></v-text-field>
 
@@ -102,6 +113,7 @@
           v-model="nuevo.precio"
           label="Precio"
           :rules="numRules"
+          append-icon="mdi-cash-usd"
           required
         ></v-text-field>
       </v-form>
