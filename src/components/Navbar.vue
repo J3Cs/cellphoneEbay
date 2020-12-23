@@ -15,16 +15,23 @@
       <v-spacer></v-spacer>
       <div class="d-none d-md-flex">
         <router-link to="/">
-          <v-btn class="inicio"> <v-icon>mdi-home-circle</v-icon> Inicio </v-btn>
+          <v-btn class="inicio">
+            <v-icon>mdi-home-circle</v-icon> Inicio
+          </v-btn>
         </router-link>
         <router-link to="/">
-          <v-btn class="estadisticas"><v-icon>mdi-chart-bar</v-icon> estadisticas </v-btn>
+          <v-btn class="estadisticas">
+            <v-icon>mdi-chart-bar</v-icon> estadisticas
+          </v-btn>
         </router-link>
       </div>
       <v-spacer></v-spacer>
       <div class="d-none d-md-flex">
         <router-link to="/nuevo">
-          <v-btn> Nuevo Anuncio <v-icon>mdi-clipboard-plus</v-icon></v-btn>
+          <v-btn>
+            Nuevo Anuncio
+            <v-icon>mdi-clipboard-plus</v-icon>
+          </v-btn>
         </router-link>
       </div>
     </v-app-bar>
@@ -35,8 +42,13 @@
       <v-toolbar-title class="title">Cellphone Ebay</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer"
-     absolute left temporary color="indigo darken-4">
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      left
+      temporary
+      color="indigo darken-4"
+    >
       <v-list nav dense>
         <div class="information">
           <v-list-item-avatar>
@@ -49,13 +61,19 @@
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item>
-            <router-link class="link" to="/"><v-icon>mdi-home-circle</v-icon> Inicio </router-link>
+            <router-link class="link" to="/">
+              <v-icon>mdi-home-circle</v-icon>Inicio
+            </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link class="link" to="/nuevo"><v-icon>mdi-clipboard-plus</v-icon> Nuevo Anuncio </router-link>
+            <router-link class="link" to="/nuevo">
+              <v-icon>mdi-clipboard-plus</v-icon> Nuevo Anuncio
+            </router-link>
           </v-list-item>
           <v-list-item>
-            <router-link class="link" to="/"><v-icon>mdi-chart-bar</v-icon> Estadisticas </router-link>
+            <router-link class="link" to="/">
+              <v-icon>mdi-chart-bar</v-icon> Estadisticas
+            </router-link>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -67,21 +85,21 @@ export default {
   name: "Navbar",
   data: () => ({
     drawer: false,
-    group: null,
+    group: null
   }),
 
   watch: {
     group() {
       this.drawer = false;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
 a {
   text-decoration: none;
 }
-.information{
+.information {
   display: flex;
   color: #fff;
   margin-left: 1.2em;
@@ -89,7 +107,7 @@ a {
 .link {
   margin-top: 1em;
   background: #fff;
-  color: #1A237E;
+  color: #1a237e;
   font-weight: 500;
   border: 1px solid #fff;
   text-align: center;
