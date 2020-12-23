@@ -6,8 +6,8 @@
           <v-carousel-item
             v-for="(item, i) in items"
             :key="i"
-            :src="item"
-          ></v-carousel-item>
+            
+          ><img :src="item" style="height: 100%; width: 100%"/></v-carousel-item>
         </v-carousel>
       </v-col>
 

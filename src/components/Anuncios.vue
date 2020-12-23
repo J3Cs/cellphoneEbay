@@ -147,6 +147,14 @@
           <v-row>
             <v-col cols="8" class="utils">
               <v-row>
+                <small
+                  class="red text-center rounded-pill col-12 white--text text-700"
+                  v-show="priceErr"
+                >
+                  Por favor, ingrese un rango valido
+                </small>
+              </v-row>
+              <v-row>
                 <h3 class="col-12">Precio</h3>
                 <v-text-field
                   label="Desde"
@@ -154,25 +162,30 @@
                   style="margin-right: 1em"
                 />
                 <v-text-field label="Hasta" v-model="hasta" />
-                <v-btn class="btns" @click="filtroPrecio(desde, hasta)"
-                  >Buscar</v-btn
+                <v-btn
+                  class="btns"
+                  @click="filtroPrecio(desde, hasta)"
+                  :disabled="hasta == 0"
                 >
+                  Buscar
+                </v-btn>
               </v-row>
             </v-col>
-            <v-col
-              cols="2"
-              style="margin-left: 1em;"
-              class="utils"
-            >
+            <v-col cols="2" style="margin-left: 1em" class="utils">
               <v-row>
                 <h3 class="col-12">Ordenar</h3>
                 <v-btn
                   class="btns col-12"
                   @click="orderByPrecio()"
                   style="margin-right: 1em"
-                  >Precio</v-btn
                 >
-                <v-btn class="btns col-12">Fecha</v-btn>
+                  Precio
+                  <v-icon>mdi-order-numeric-ascending</v-icon>
+                </v-btn>
+                <v-btn class="btns col-12">
+                  Fecha
+                  <v-icon>mdi-order-bool-ascending</v-icon>
+                </v-btn>
               </v-row>
             </v-col>
           </v-row>
@@ -197,7 +210,7 @@
             class="mx-auto col-3 card-p"
             max-width="320"
           >
-            <div v-for="(image,index) in images" :key="index">
+            <div v-for="(image, index) in images" :key="index">
               <div v-if="anuncio.id == image.id">
                 <v-img height="250" :src="image.url"></v-img>
               </div>
@@ -245,20 +258,20 @@ export default {
     asc: false,
     dialog: false,
     images: [],
-    urlImg: [],
+    priceErr: false
   }),
   methods: {
     getAll() {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then((querySnapshot) => {
+        .then(querySnapshot => {
           this.anuncios = [];
-          querySnapshot.docs.map((doc) => {
+          querySnapshot.docs.map(doc => {
             this.anuncios.push({
               id: doc.id,
               image: this.getImages(doc.id),
-              ...doc.data(),
+              ...doc.data()
             });
           });
           console.log(this.images);
@@ -266,15 +279,15 @@ export default {
         });
     },
     async getImages(id) {
-      this.images = []
+      this.images = [];
       const ref = storage.ref();
       const carpeta = id;
       await ref
         .child(`${carpeta}/`)
         .list({ maxResults: 1 })
-        .then((res) => {
-          res.items.forEach((imgRef) => {
-            imgRef.getDownloadURL().then((url) => {
+        .then(res => {
+          res.items.forEach(imgRef => {
+            imgRef.getDownloadURL().then(url => {
               this.images.push({ id, url });
             });
           });
@@ -286,13 +299,12 @@ export default {
       if (this.check) {
         db.collection("anuncios")
           .get()
-          .then((querySnapshot) => {
+          .then(querySnapshot => {
             this.anuncios = [];
-            querySnapshot.docs.map((doc) => {
+            querySnapshot.docs.map(doc => {
               if (doc.data().descripcion.marca === valor) {
                 this.anuncios.push({ id: doc.id, ...doc.data() });
               } else if (doc.data().descripcion.sistema === valor) {
-                150;
                 this.anuncios.push({ id: doc.id, ...doc.data() });
               } else if (doc.data().descripcion.pantalla === valor) {
                 this.anuncios.push({ id: doc.id, ...doc.data() });
@@ -320,16 +332,18 @@ export default {
       this.loading = true;
       desde = Number(desde);
       hasta = Number(hasta);
-      if (hasta <= desde) {
+      if (hasta < desde) {
         this.getAll();
+        this.priceErr = true;
       } else {
+        this.priceErr = false;
         db.collection("anuncios")
           .where("precio", ">=", desde)
           .where("precio", "<=", hasta)
           .get()
-          .then((querySnapshot) => {
+          .then(querySnapshot => {
             this.anuncios = [];
-            querySnapshot.docs.map((doc) => {
+            querySnapshot.docs.map(doc => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
             this.loading = false;
@@ -343,9 +357,9 @@ export default {
         db.collection("anuncios")
           .orderBy("precio", "desc")
           .get()
-          .then((querySnapshot) => {
+          .then(querySnapshot => {
             this.anuncios = [];
-            querySnapshot.docs.map((doc) => {
+            querySnapshot.docs.map(doc => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
             this.loading = false;
@@ -355,9 +369,9 @@ export default {
         db.collection("anuncios")
           .orderBy("precio", "asc")
           .get()
-          .then((querySnapshot) => {
+          .then(querySnapshot => {
             this.anuncios = [];
-            querySnapshot.docs.map((doc) => {
+            querySnapshot.docs.map(doc => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
             this.loading = false;
@@ -368,14 +382,14 @@ export default {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.docs.map((doc) => {
+        .then(querySnapshot => {
+          querySnapshot.docs.map(doc => {
             this.sistemas.push(doc.data().descripcion.sistema);
           });
           let arr = [];
           for (let index = 0; index < this.sistemas.length; index++) {
             let sistema = this.sistemas[index];
-            arr.push(this.sistemas.filter((marc) => marc === sistema));
+            arr.push(this.sistemas.filter(marc => marc === sistema));
           }
           for (let index = 0; index < arr.length - 1; index++) {
             if (arr[index][0] === arr[index + 1][0]) {
@@ -383,12 +397,12 @@ export default {
             } else {
               this.contSistema.push({
                 sistema: arr[index][0],
-                cant: arr[index].length,
+                cant: arr[index].length
               });
               if (index + 1 === arr.length - 1) {
                 this.contSistema.push({
                   sistema: arr[index + 1][0],
-                  cant: arr[index + 1].length,
+                  cant: arr[index + 1].length
                 });
               }
             }
@@ -400,14 +414,14 @@ export default {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.docs.map((doc) => {
+        .then(querySnapshot => {
+          querySnapshot.docs.map(doc => {
             this.marcas.push(doc.data().descripcion.marca);
           });
           let arr = [];
           for (let index = 0; index < this.marcas.length; index++) {
             let marca = this.marcas[index];
-            arr.push(this.marcas.filter((marc) => marc === marca));
+            arr.push(this.marcas.filter(marc => marc === marca));
           }
           for (let index = 0; index < arr.length - 1; index++) {
             if (arr[index][0] === arr[index + 1][0]) {
@@ -415,12 +429,12 @@ export default {
             } else {
               this.contMarca.push({
                 marca: arr[index][0],
-                cant: arr[index].length,
+                cant: arr[index].length
               });
               if (index + 1 === arr.length - 1) {
                 this.contMarca.push({
                   marca: arr[index + 1][0],
-                  cant: arr[index + 1].length,
+                  cant: arr[index + 1].length
                 });
               }
             }
@@ -432,14 +446,14 @@ export default {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.docs.map((doc) => {
+        .then(querySnapshot => {
+          querySnapshot.docs.map(doc => {
             this.pantallas.push(doc.data().descripcion.pantalla);
           });
           let arr = [];
           for (let index = 0; index < this.pantallas.length; index++) {
             let pantalla = this.pantallas[index];
-            arr.push(this.pantallas.filter((marc) => marc === pantalla));
+            arr.push(this.pantallas.filter(marc => marc === pantalla));
           }
           for (let index = 0; index < arr.length - 1; index++) {
             if (arr[index][0] === arr[index + 1][0]) {
@@ -447,26 +461,26 @@ export default {
             } else {
               this.contPantalla.push({
                 pantalla: arr[index][0],
-                cant: arr[index].length,
+                cant: arr[index].length
               });
               if (index + 1 === arr.length - 1) {
                 this.contPantalla.push({
                   pantalla: arr[index + 1][0],
-                  cant: arr[index + 1].length,
+                  cant: arr[index + 1].length
                 });
               }
             }
           }
         });
       this.loading = false;
-    },
+    }
   },
   created() {
     this.getAll();
     this.countMarcas();
     this.countSistemas();
     this.countPantallas();
-  },
+  }
 };
 </script>
 <style scoped>
@@ -500,10 +514,9 @@ export default {
 .utils {
   padding: 2em;
   border-radius: 15px;
-  box-shadow: 15px 15px 20px rgba(0,0,0,0.1),
-              -15px -15px 20px #fff,
-              inset -5px -5px 5px rgba(255,255,255,0.5),
-              inset 5px 5px 5px rgba(0,0,0,0.05);
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.1), -15px -15px 20px #fff,
+    inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+    inset 5px 5px 5px rgba(0, 0, 0, 0.05);
   margin-bottom: 1em;
 }
 .filtros__marcas {
