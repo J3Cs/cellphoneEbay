@@ -102,7 +102,7 @@
                 <input type="checkbox" @click="filtrosCheck(marca.marca)" />
                 <label for="check">
                   {{ marca.marca }}
-                  <v-chip style="background: brown; color: #fff">{{
+                  <v-chip class="indigo white--text">{{
                     marca.cant
                   }}</v-chip>
                 </label>
@@ -116,7 +116,7 @@
                 <input type="checkbox" @click="filtrosCheck(sistema.sistema)" />
                 <label for="check">
                   {{ sistema.sistema }}
-                  <v-chip style="background: brown; color: #fff">{{
+                  <v-chip class="indigo white--text">{{
                     sistema.cant
                   }}</v-chip>
                 </label>
@@ -133,7 +133,7 @@
                 />
                 <label for="check">
                   {{ pantalla.pantalla }}
-                  <v-chip style="background: brown; color: #fff">{{
+                  <v-chip class="indigo white--text">{{
                     pantalla.cant
                   }}</v-chip>
                 </label>
@@ -573,11 +573,10 @@ export default {
   padding: 0.5em;
   margin-right: 0.5em;
   box-sizing: border-box;
-  border-right: 5px solid;
-  border-bottom: 5px solid;
-  border-top: 3px solid;
-  border-left: 1px solid;
   border-radius: 15px;
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.3), -15px -15px 20px #fff,
+    inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+    inset 5px 5px 5px rgba(0, 0, 0, 0.09);
 }
 .utils {
   padding: 2em;
@@ -592,11 +591,11 @@ export default {
 }
 .filtros__marcas h3 {
   text-transform: uppercase;
+  text-align: center;
   border: 1px solid;
   padding: 0.5em 0.25em;
-  border-radius: 15px 0 15px 0;
-  background: rgb(255, 0, 103);
-  color: #fff;
+  border-radius: 15px;
+  color: rgb(255, 0, 103);
 }
 .filtros__marcas ul {
   list-style: none;
@@ -608,7 +607,6 @@ export default {
   position: relative;
   border-radius: 15px;
   padding: 0.5em 0.25em;
-  border: 1px solid;
   transition: 0.6s;
 }
 .filtros__marcas li:hover {
