@@ -234,6 +234,20 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-footer padless>
+      <v-col class="text-center" cols="12">
+        <div class="text-center">
+          <v-pagination
+            v-model="page"
+            :length="totalLength"
+            circle
+            @next="next"
+            @previous="previous"
+          ></v-pagination>
+        </div>
+        Cardona Castro, Julio Cesar CC16046
+      </v-col>
+    </v-footer>
   </div>
 </template>
 
@@ -258,23 +272,80 @@ export default {
     asc: false,
     dialog: false,
     images: [],
-    priceErr: false
+    priceErr: false,
+    totalLength: 0,
+    last: {},
+    prev: {},
+    page: 1,
+    limit: 6
   }),
   methods: {
+    previous() {
+      this.loading = true;
+      db.collection("anuncios")
+        .limit(this.limit)
+        .endBefore(this.prev)
+        .get()
+        .then((querySnapshot) => {
+          this.last = querySnapshot.docs[querySnapshot.docs.length - 1];
+          this.prev = querySnapshot.docs[0];
+          this.anuncios = [];
+          querySnapshot.docs.map((doc) => {
+            this.anuncios.push({
+              id: doc.id,
+              image: this.getImages(doc.id),
+              ...doc.data(),
+            });
+          });
+          this.loading = false;
+        });
+    },
+    next() {
+      this.loading = true;
+      db.collection("anuncios")
+        .limit(this.limit)
+        .startAfter(this.last)
+        .get()
+        .then((querySnapshot) => {
+          this.last = querySnapshot.docs[querySnapshot.docs.length - 1];
+          this.prev = querySnapshot.docs[0];
+          this.anuncios = [];
+          querySnapshot.docs.map((doc) => {
+            this.anuncios.push({
+              id: doc.id,
+              image: this.getImages(doc.id),
+              ...doc.data(),
+            });
+          });
+          this.loading = false;
+        });
+    },
     getAll() {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then(querySnapshot => {
+        .then((querySnapshot) => {
+          this.totalLength = querySnapshot.docs.length;
+          if (this.totalLength % 2 !== 0) {
+            this.totalLength = this.totalLength / this.limit + 1;
+          }else{
+            this.totalLength = this.totalLength / this.limit;
+          }
+        });
+      db.collection("anuncios")
+        .limit(this.limit)
+        .get()
+        .then((querySnapshot) => {
+          this.last = querySnapshot.docs[querySnapshot.docs.length - 1];
+          this.prev = querySnapshot.docs[0];
           this.anuncios = [];
-          querySnapshot.docs.map(doc => {
+          querySnapshot.docs.map((doc) => {
             this.anuncios.push({
               id: doc.id,
               image: this.getImages(doc.id),
-              ...doc.data()
+              ...doc.data(),
             });
           });
-          console.log(this.images);
           this.loading = false;
         });
     },
@@ -285,9 +356,9 @@ export default {
       await ref
         .child(`${carpeta}/`)
         .list({ maxResults: 1 })
-        .then(res => {
-          res.items.forEach(imgRef => {
-            imgRef.getDownloadURL().then(url => {
+        .then((res) => {
+          res.items.forEach((imgRef) => {
+            imgRef.getDownloadURL().then((url) => {
               this.images.push({ id, url });
             });
           });
@@ -299,9 +370,9 @@ export default {
       if (this.check) {
         db.collection("anuncios")
           .get()
-          .then(querySnapshot => {
+          .then((querySnapshot) => {
             this.anuncios = [];
-            querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map((doc) => {
               if (doc.data().descripcion.marca === valor) {
                 this.anuncios.push({ id: doc.id, ...doc.data() });
               } else if (doc.data().descripcion.sistema === valor) {
@@ -341,9 +412,9 @@ export default {
           .where("precio", ">=", desde)
           .where("precio", "<=", hasta)
           .get()
-          .then(querySnapshot => {
+          .then((querySnapshot) => {
             this.anuncios = [];
-            querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map((doc) => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
             this.loading = false;
@@ -357,9 +428,9 @@ export default {
         db.collection("anuncios")
           .orderBy("precio", "desc")
           .get()
-          .then(querySnapshot => {
+          .then((querySnapshot) => {
             this.anuncios = [];
-            querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map((doc) => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
             this.loading = false;
@@ -369,9 +440,9 @@ export default {
         db.collection("anuncios")
           .orderBy("precio", "asc")
           .get()
-          .then(querySnapshot => {
+          .then((querySnapshot) => {
             this.anuncios = [];
-            querySnapshot.docs.map(doc => {
+            querySnapshot.docs.map((doc) => {
               this.anuncios.push({ id: doc.id, ...doc.data() });
             });
             this.loading = false;
@@ -382,14 +453,14 @@ export default {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then(querySnapshot => {
-          querySnapshot.docs.map(doc => {
+        .then((querySnapshot) => {
+          querySnapshot.docs.map((doc) => {
             this.sistemas.push(doc.data().descripcion.sistema);
           });
           let arr = [];
           for (let index = 0; index < this.sistemas.length; index++) {
             let sistema = this.sistemas[index];
-            arr.push(this.sistemas.filter(marc => marc === sistema));
+            arr.push(this.sistemas.filter((marc) => marc === sistema));
           }
           for (let index = 0; index < arr.length - 1; index++) {
             if (arr[index][0] === arr[index + 1][0]) {
@@ -397,12 +468,12 @@ export default {
             } else {
               this.contSistema.push({
                 sistema: arr[index][0],
-                cant: arr[index].length
+                cant: arr[index].length,
               });
               if (index + 1 === arr.length - 1) {
                 this.contSistema.push({
                   sistema: arr[index + 1][0],
-                  cant: arr[index + 1].length
+                  cant: arr[index + 1].length,
                 });
               }
             }
@@ -414,14 +485,14 @@ export default {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then(querySnapshot => {
-          querySnapshot.docs.map(doc => {
+        .then((querySnapshot) => {
+          querySnapshot.docs.map((doc) => {
             this.marcas.push(doc.data().descripcion.marca);
           });
           let arr = [];
           for (let index = 0; index < this.marcas.length; index++) {
             let marca = this.marcas[index];
-            arr.push(this.marcas.filter(marc => marc === marca));
+            arr.push(this.marcas.filter((marc) => marc === marca));
           }
           for (let index = 0; index < arr.length - 1; index++) {
             if (arr[index][0] === arr[index + 1][0]) {
@@ -429,12 +500,12 @@ export default {
             } else {
               this.contMarca.push({
                 marca: arr[index][0],
-                cant: arr[index].length
+                cant: arr[index].length,
               });
               if (index + 1 === arr.length - 1) {
                 this.contMarca.push({
                   marca: arr[index + 1][0],
-                  cant: arr[index + 1].length
+                  cant: arr[index + 1].length,
                 });
               }
             }
@@ -446,14 +517,14 @@ export default {
       this.loading = true;
       db.collection("anuncios")
         .get()
-        .then(querySnapshot => {
-          querySnapshot.docs.map(doc => {
+        .then((querySnapshot) => {
+          querySnapshot.docs.map((doc) => {
             this.pantallas.push(doc.data().descripcion.pantalla);
           });
           let arr = [];
           for (let index = 0; index < this.pantallas.length; index++) {
             let pantalla = this.pantallas[index];
-            arr.push(this.pantallas.filter(marc => marc === pantalla));
+            arr.push(this.pantallas.filter((marc) => marc === pantalla));
           }
           for (let index = 0; index < arr.length - 1; index++) {
             if (arr[index][0] === arr[index + 1][0]) {
@@ -461,26 +532,26 @@ export default {
             } else {
               this.contPantalla.push({
                 pantalla: arr[index][0],
-                cant: arr[index].length
+                cant: arr[index].length,
               });
               if (index + 1 === arr.length - 1) {
                 this.contPantalla.push({
                   pantalla: arr[index + 1][0],
-                  cant: arr[index + 1].length
+                  cant: arr[index + 1].length,
                 });
               }
             }
           }
         });
       this.loading = false;
-    }
+    },
   },
   created() {
     this.getAll();
     this.countMarcas();
     this.countSistemas();
     this.countPantallas();
-  }
+  },
 };
 </script>
 <style scoped>
