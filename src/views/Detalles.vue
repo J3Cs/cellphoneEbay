@@ -15,7 +15,7 @@
             {{ anuncio.titulo }}
           </h2>
           <h3 class="informacion__precio">${{ anuncio.precio }}</h3>
-          <v-btn> Comprar <v-icon color="green">mdi-handshake</v-icon></v-btn>
+          <v-btn @click="success"> Comprar <v-icon color="green">mdi-handshake</v-icon></v-btn>
           <div class="informacion__contacto">
             <span class="informacion__contacto__label" >
               <v-icon>mdi-account</v-icon>vendedor:</span
@@ -43,19 +43,19 @@
           <v-col class="col-12 col-md-6">
             <div class="descripcion__especificaciones">
               <ul>
-                <li><v-icon color="white">mdi-checkbox-multiple-marked</v-icon>Estado: {{ anuncio.descripcion.estado }}</li>
-                <li><v-icon color="white">mdi-briefcase</v-icon>Marca: {{ anuncio.descripcion.marca }}</li>
-                <li><v-icon color="white">mdi-cellphone</v-icon>Modelo: {{ anuncio.descripcion.modelo }}</li>
-                <li><v-icon color="white">mdi-tablet-cellphone</v-icon>Pantalla: {{ anuncio.descripcion.pantalla }}</li>
-                <li><v-icon color="white">mdi-android</v-icon>Sistema: {{ anuncio.descripcion.sistema }}</li>
-                <li><v-icon color="white">mdi-chip</v-icon>RAM: {{ anuncio.descripcion.ram }}</li>
-                <li><v-icon color="white">mdi-memory</v-icon>ROM: {{ anuncio.descripcion.rom }}</li>
+                <li><v-icon color="black">mdi-checkbox-multiple-marked</v-icon>Estado: {{ anuncio.descripcion.estado }}</li>
+                <li><v-icon color="black">mdi-briefcase</v-icon>Marca: {{ anuncio.descripcion.marca }}</li>
+                <li><v-icon color="black">mdi-cellphone</v-icon>Modelo: {{ anuncio.descripcion.modelo }}</li>
+                <li><v-icon color="black">mdi-tablet-cellphone</v-icon>Pantalla: {{ anuncio.descripcion.pantalla }}</li>
+                <li><v-icon color="black">mdi-android</v-icon>Sistema: {{ anuncio.descripcion.sistema }}</li>
+                <li><v-icon color="black">mdi-chip</v-icon>RAM: {{ anuncio.descripcion.ram }}</li>
+                <li><v-icon color="black">mdi-memory</v-icon>ROM: {{ anuncio.descripcion.rom }}</li>
               </ul>
             </div>
           </v-col>
           <v-col class="col-12 col-md-6">
             <div class="descripcion__especificaciones">
-              <p><v-icon color="white">mdi-text-box</v-icon>{{ anuncio.descripcion.descripcion }}</p>
+              <p><v-icon color="black">mdi-text-box</v-icon>{{ anuncio.descripcion.descripcion }}</p>
             </div>
           </v-col>
         </v-row>
@@ -66,6 +66,7 @@
 
 <script>
 import { db, storage } from "../db";
+import Swal from 'sweetalert2'
 export default {
   data() {
     return {
@@ -77,6 +78,15 @@ export default {
     };
   },
   methods: {
+    success(){
+        Swal.fire({
+          toast: true,
+          icon: 'success',
+          title: 'Agregado al carrito',
+          timer: 2000,
+          showConfirmButton: false
+        })
+    },
     getImages() {
       this.items = [];
       const ref = storage.ref();
@@ -145,25 +155,39 @@ export default {
   padding: 1em;
   text-align: left;
   border: 1px solid #fff;
-  box-shadow: -6px 10px 5px #1a237e;
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.1), -15px -15px 20px #fff,
+              inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+              inset 5px 5px 5px rgba(0, 0, 0, 0.05);
   border-radius: 15px;
   margin-right: 3em;
   margin-left: 4em;
-  background: linear-gradient(270deg, #1a237e, #5c6bc0);
-  color: #fff;
   height: 100%;
   transition: 0.3s;
 }
 .descripcion__especificaciones:hover {
-  box-shadow: 6px -10px 5px #1a237e;
-  background: linear-gradient(270deg, #5c6bc0, #1a237e);
+  box-shadow: 6px 10px 5px rgba(0, 0, 0, 0.5);
 }
 .descripcion__especificaciones ul {
   list-style: none;
 }
 .descripcion__especificaciones li {
+  position: relative;
   margin: 0.5rem;
   font-size: 1.5em;
+}
+.descripcion__especificaciones li::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: -0.5em;
+  width: 0%;
+  height: 100%;
+  border-radius: 25px;
+  background: rgba(0,0,255, 0.3);
+  transition: 0.5s ease-in-out;
+}
+.descripcion__especificaciones li:hover::before {
+  width: 100%;
 }
 .descripcion__especificaciones p {
   margin: 0.5rem;

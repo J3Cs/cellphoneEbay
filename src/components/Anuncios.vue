@@ -219,9 +219,6 @@
             <v-card-subtitle>$ {{ anuncio.precio }}</v-card-subtitle>
 
             <v-card-text>
-              <div>
-                {{ anuncio.descripcion.descripcion }}
-              </div>
               <div class="my-4 subtitle-1">
                 <router-link
                   :to="{ name: 'DetalleAnuncio', params: { id: anuncio.id } }"
@@ -277,7 +274,7 @@ export default {
     last: {},
     prev: {},
     page: 1,
-    limit: 6
+    limit: 6,
   }),
   methods: {
     previous() {
@@ -326,9 +323,9 @@ export default {
         .get()
         .then((querySnapshot) => {
           this.totalLength = querySnapshot.docs.length;
-          if (this.totalLength % 2 !== 0) {
+          if (this.totalLength % this.limit !== 0) {
             this.totalLength = this.totalLength / this.limit + 1;
-          }else{
+          } else {
             this.totalLength = this.totalLength / this.limit;
           }
         });
@@ -609,7 +606,7 @@ export default {
 }
 .filtros__marcas li {
   position: relative;
-  border-radius: 15px 0 15px 0;
+  border-radius: 15px;
   padding: 0.5em 0.25em;
   border: 1px solid;
   transition: 0.6s;

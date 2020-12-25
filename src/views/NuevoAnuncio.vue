@@ -132,7 +132,7 @@
         :disabled="archivo == null"
         class="mr-3"
       >
-      <v-icon>mdi-book-plus</v-icon>Crear
+        <v-icon>mdi-book-plus</v-icon>Crear
       </v-btn>
       <v-btn
         color="orange darken-4"
@@ -146,6 +146,7 @@
 </template>
 <script>
 import { db, storage } from "../db";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -184,6 +185,7 @@ export default {
       this.$router.push("/");
     },
     procesar() {
+      this.loading = true;
       if (this.$refs.form1.validate() && this.$refs.form.validate()) {
         db.collection("anuncios")
           .add({
@@ -194,8 +196,15 @@ export default {
             descripcion: this.nuevo.descripcion,
           })
           .then((docRef) => {
-            console.log(docRef.id);
-            this.upload(docRef.id);
+            Swal.fire({
+              toast: true,
+              icon: "success",
+              title: "Agregado con Exito",
+              timer: 2000,
+              showConfirmButton: false,
+            }).then(() => {
+              this.upload(docRef.id);
+            });
           })
           .catch((err) => {
             console.log(err);
@@ -207,7 +216,6 @@ export default {
     },
     upload(id) {
       if (this.archivo) {
-        this.loading = true;
         for (let index = 0; index < this.archivo.length; index++) {
           console.log(this.archivo[index].name);
           const ref = storage.ref();
@@ -236,13 +244,12 @@ export default {
   border: 1px solid #fff;
   border-radius: 15px;
   padding: 1.5em;
-  box-shadow: 15px 15px 20px rgba(0,0,0,0.1),
-              -15px -15px 20px #fff,
-              inset -5px -5px 5px rgba(255,255,255,0.5),
-              inset 5px 5px 5px rgba(0,0,0,0.05);
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.1), -15px -15px 20px #fff,
+    inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+    inset 5px 5px 5px rgba(0, 0, 0, 0.05);
   transition: 0.2s;
 }
-.border:hover{
+.border:hover {
   transform: scale(1.01);
 }
 </style>
