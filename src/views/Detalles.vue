@@ -191,7 +191,7 @@ export default {
 }
 .descripcion__especificaciones p {
   margin: 0.5rem;
-  font-size: 1em;
+  font-size: 1.2em;
   margin-left: 3em;
 }
 .theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
