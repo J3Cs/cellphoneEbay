@@ -99,7 +99,7 @@
             <h3>Marcas</h3>
             <ul>
               <li v-for="(marca, index) in contMarca" :key="index">
-                <input type="checkbox" :id="`checkMarca${index}`" @click="filtrosCheck(marca.marca)" />
+                <input type="checkbox" :id="`checkMarca${index}`" @click="filtrosCheck(marca.marca)" class="d-md-none"/>
                 <label :for="`checkMarca${index}`">
                   {{ marca.marca }}
                   <v-chip color="primary" small>{{
@@ -113,7 +113,7 @@
             <h3>Sistema</h3>
             <ul>
               <li v-for="(sistema, index) in contSistema" :key="index">
-                <input type="checkbox" :id="`checkSistema${index}`" @click="filtrosCheck(sistema.sistema)" />
+                <input type="checkbox" :id="`checkSistema${index}`" @click="filtrosCheck(sistema.sistema)" class="d-md-none"/>
                 <label :for="`checkSistema${index}`">
                   {{ sistema.sistema }}
                   <v-chip color="primary" small>{{
@@ -131,6 +131,7 @@
                   type="checkbox"
                   :id="`checkPantalla${index}`"
                   @click="filtrosCheck(pantalla.pantalla)"
+                  class="d-md-none"
                 />
                 <label :for="`checkPantalla${index}`">
                   {{ pantalla.pantalla }}
@@ -674,13 +675,11 @@ export default {
   color: #fff;
   text-shadow: 0 0 10px rgb(0, 0, 0);
 }
-input[type="checkbox"]{
-  display: none;
-}
 input[type="checkbox"]:checked + label{
   background: rgb(56, 4, 126);
   border-radius: 15px;
   color: #fff;
   padding: 0.7em;
 }
+
 </style>

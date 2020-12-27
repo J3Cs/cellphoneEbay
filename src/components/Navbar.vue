@@ -39,8 +39,8 @@
       </div>
     </v-app-bar>
 
-    <v-app-bar color="deep-purple accent-4" dark class="d-md-none d-block">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar color="white" dark class="d-md-none d-block">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="primary"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="title">Cellphone Ebay</v-toolbar-title>
     </v-app-bar>
@@ -50,7 +50,7 @@
       absolute
       left
       temporary
-      color="indigo darken-4"
+      color="white"
     >
       <v-list nav dense>
         <div class="information">
