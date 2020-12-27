@@ -41,7 +41,7 @@
                   />
                   <label for="check">
                     {{ marca.marca }}
-                    <v-chip style="background: brown; color: #fff">{{
+                    <v-chip color="primary" small>{{
                       marca.cant
                     }}</v-chip>
                   </label>
@@ -61,7 +61,7 @@
                   />
                   <label for="check">
                     {{ sistema.sistema }}
-                    <v-chip style="background: brown; color: #fff">{{
+                    <v-chip color="primary" small>{{
                       sistema.cant
                     }}</v-chip>
                   </label>
@@ -81,7 +81,7 @@
                   />
                   <label for="check">
                     {{ pantalla.pantalla }}
-                    <v-chip style="background: brown; color: #fff">{{
+                    <v-chip color="primary" small>{{
                       pantalla.cant
                     }}</v-chip>
                   </label>
@@ -99,10 +99,10 @@
             <h3>Marcas</h3>
             <ul>
               <li v-for="(marca, index) in contMarca" :key="index">
-                <input type="checkbox" @click="filtrosCheck(marca.marca)" />
-                <label for="check">
+                <input type="checkbox" :id="`checkMarca${index}`" @click="filtrosCheck(marca.marca)" />
+                <label :for="`checkMarca${index}`">
                   {{ marca.marca }}
-                  <v-chip class="indigo white--text">{{
+                  <v-chip color="primary" small>{{
                     marca.cant
                   }}</v-chip>
                 </label>
@@ -113,10 +113,10 @@
             <h3>Sistema</h3>
             <ul>
               <li v-for="(sistema, index) in contSistema" :key="index">
-                <input type="checkbox" @click="filtrosCheck(sistema.sistema)" />
-                <label for="check">
+                <input type="checkbox" :id="`checkSistema${index}`" @click="filtrosCheck(sistema.sistema)" />
+                <label :for="`checkSistema${index}`">
                   {{ sistema.sistema }}
-                  <v-chip class="indigo white--text">{{
+                  <v-chip color="primary" small>{{
                     sistema.cant
                   }}</v-chip>
                 </label>
@@ -129,11 +129,12 @@
               <li v-for="(pantalla, index) in contPantalla" :key="index">
                 <input
                   type="checkbox"
+                  :id="`checkPantalla${index}`"
                   @click="filtrosCheck(pantalla.pantalla)"
                 />
-                <label for="check">
+                <label :for="`checkPantalla${index}`">
                   {{ pantalla.pantalla }}
-                  <v-chip class="indigo white--text">{{
+                  <v-chip color="primary" small>{{
                     pantalla.cant
                   }}</v-chip>
                 </label>
@@ -232,6 +233,7 @@
       </v-col>
     </v-row>
     <v-footer padless>
+  
       <v-col class="text-center" cols="12">
         <div class="text-center">
           <v-pagination
@@ -242,7 +244,7 @@
             @previous="previous"
           ></v-pagination>
         </div>
-        Cardona Castro, Julio Cesar CC16046
+        <span class="myName">Cardona Castro, Julio Cesar CC16046</span>
       </v-col>
     </v-footer>
   </div>
@@ -599,7 +601,7 @@ export default {
 }
 .filtros__marcas ul {
   list-style: none;
-  text-align: left;
+  text-align: right;
   position: relative;
   padding-left: 0 !important;
 }
@@ -610,13 +612,16 @@ export default {
   transition: 0.6s;
 }
 .filtros__marcas li:hover {
-  filter: blur(0);
+  cursor: pointer;
   background: rgb(56, 4, 126);
   color: #fff;
 }
 .filtros__marcas label {
   text-transform: capitalize;
   font-weight: 700;
+}
+.filtros__marcas label:hover {
+  cursor: pointer;
 }
 .v-card__title {
   justify-content: center;
@@ -633,6 +638,7 @@ export default {
 .theme--light.v-card > .v-card__text,
 .theme--light.v-card .v-card__subtitle {
   color: #000;
+  font-weight: 700;
 }
 .card-p {
   margin-top: 10px;
@@ -641,7 +647,7 @@ export default {
   margin-right: 1.5em;
 }
 .card-p:hover {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 .detalles {
   margin-top: 12px;
@@ -656,5 +662,25 @@ export default {
 .detalles:hover {
   background: #a61919;
   color: #fff;
+}
+.myName{
+  margin-top: 1em;
+  font-weight: 700;
+  font-size: 2em;
+  color: #000;
+  transition: 0.5s;
+}
+.myName:hover{
+  color: #fff;
+  text-shadow: 0 0 10px rgb(0, 0, 0);
+}
+input[type="checkbox"]{
+  display: none;
+}
+input[type="checkbox"]:checked + label{
+  background: rgb(56, 4, 126);
+  border-radius: 15px;
+  color: #fff;
+  padding: 0.7em;
 }
 </style>
