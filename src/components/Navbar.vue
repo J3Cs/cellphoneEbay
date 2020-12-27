@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app class="d-none d-md-block" color="deep-purple accent-4">
+    <v-app-bar app class="d-none d-md-block" color="white">
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -26,13 +26,16 @@
         </router-link>
       </div>
       <v-spacer></v-spacer>
-      <div class="d-none d-md-flex">
+      <div class="d-none d-md-flex mr-2">
         <router-link to="/nuevo">
           <v-btn>
             Nuevo Anuncio
             <v-icon>mdi-clipboard-plus</v-icon>
           </v-btn>
         </router-link>
+        <v-badge class="mt-1" color="error" content="1">
+          <v-icon color="primary" class="ml-3 text-h4">mdi-cart</v-icon>
+        </v-badge>
       </div>
     </v-app-bar>
 
@@ -117,10 +120,10 @@ a {
   box-shadow: 0 5px 5px rgba(255, 255, 255, 0.5);
 }
 .title {
-  color: #fff;
+  color: #1A237E;
   font-weight: 700;
   margin-left: 3px;
-  text-shadow: 0 2px 5px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 2px 15px rgba(0, 0, 255, 0.5);
 }
 
 .theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
